@@ -8,15 +8,15 @@ using System.Text;
 
 namespace CipherUtils
 {
-    public class DESKeyInfo
+    public class KeyInfo
     {
-        public DESKeyInfo(DataRow dr)
+        public KeyInfo(DataRow dr)
         {
             this.Key = DESCode.DESDecrypt(dr["key"].ToString(), RsaCode.Prefix);
             this.CreateDate = Convert.ToDateTime(dr["createdate"]);
         }
 
-        public DESKeyInfo(string key)
+        public KeyInfo(string key)
         {
             this.CreateDate = DateTime.Now;
             this.Key = key;
@@ -26,24 +26,24 @@ namespace CipherUtils
         public DateTime CreateDate { get; set; }
         public bool IsValid { get { return !string.IsNullOrEmpty(this.Key); } }
 
-        private static DESKeyInfo key;
-        public static DESKeyInfo GetInstance()
+        private static KeyInfo key;
+        public static KeyInfo GetInstance()
         {
-            if (DESKeyInfo.key == null || !DESKeyInfo.key.IsValid)
+            if (KeyInfo.key == null || !KeyInfo.key.IsValid)
             {
                 DataTable key = SQLiteDataHelper.GetDataTableBySql("select key,createdate from sy_des_key");
                 if (key != null && key.Rows.Count > 0)
                 {
-                    DESKeyInfo.key = new DESKeyInfo(key.Rows[0]);
-                    return DESKeyInfo.key;
+                    KeyInfo.key = new KeyInfo(key.Rows[0]);
+                    return KeyInfo.key;
                 }
                 return null;
             }
             else
-                return DESKeyInfo.key;
+                return KeyInfo.key;
         }
 
-        public static void Init(DESKeyInfo key)
+        public static void Init(KeyInfo key)
         {
             SQLiteDataHelper.ExecuteNonQuery("create table sy_des_key(id integer primary key autoincrement,key varchar(2048),createdate varchar(50),pcname varchar(50))");
             string _key = DESCode.DESEncrypt(key.Key, RsaCode.Prefix);

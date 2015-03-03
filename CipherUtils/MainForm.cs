@@ -16,7 +16,7 @@ namespace CipherUtils
 #if RSA
         private RsaKeyInfo key;
 #else
-        private DESKeyInfo deskey;
+        private KeyInfo deskey;
 #endif
         public MainForm(UserInfo user)
         {
@@ -25,7 +25,7 @@ namespace CipherUtils
 #if RSA
             this.key = RsaKeyInfo.GetInstance();
 #else
-            this.deskey = DESKeyInfo.GetInstance();
+            this.deskey = KeyInfo.GetInstance();
 #endif
         }
 

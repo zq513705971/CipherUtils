@@ -111,7 +111,7 @@ namespace CipherUtils
                         }
                         MessageBox.Show("导出密钥成功！", "提示");
 #else
-                        DESKeyInfo deskey = DESKeyInfo.GetInstance();
+                        KeyInfo deskey = KeyInfo.GetInstance();
                         using (StreamWriter writer = new StreamWriter(Path.Combine(path, "Key.key")))//使用“ibs.tech”加密DES密钥
                         {
                             writer.WriteLine(DESCode.DESEncrypt(deskey.Key, RsaCode.Prefix));

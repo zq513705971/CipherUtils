@@ -48,8 +48,8 @@ namespace CipherUtils
                     RsaKeyInfo rsakey = RsaKeyInfo.CreateKey();
                     RsaKeyInfo.Init(rsakey);
 #else
-                    DESKeyInfo deskey = new DESKeyInfo(tEncrypt.Text);
-                    DESKeyInfo.Init(deskey);
+                    KeyInfo deskey = new KeyInfo(tEncrypt.Text);
+                    KeyInfo.Init(deskey);
 #endif
                     MessageBox.Show(string.Format("初始登录密码为：\"{0}\"{1}！", tPassword.Text, tPassword.Text.Equals("111111") ? "\n请及时修改该密码" : ""), "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     this.DialogResult = System.Windows.Forms.DialogResult.OK;

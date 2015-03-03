@@ -13,7 +13,7 @@ namespace CipherUtils
     public partial class CipherForm : Form
     {
         private bool encrypt = false;
-        private DESKeyInfo key;
+        private KeyInfo key;
         private UserInfo user;
         public CipherForm(UserInfo user, bool encrypt)
         {
@@ -32,7 +32,7 @@ namespace CipherUtils
             if (!valid)
                 comboBoxType.Enabled = false;
             comboBoxType.SelectedIndex = encrypt ? 0 : 1;
-            this.key = DESKeyInfo.GetInstance();
+            this.key = KeyInfo.GetInstance();
         }
 
         private void comboBoxType_SelectedIndexChanged(object sender, EventArgs e)

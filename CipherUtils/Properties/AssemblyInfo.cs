@@ -9,7 +9,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("上海讯飞瑞元信息技术有限公司")]
-[assembly: AssemblyProduct("DES手机号码加解密工具")]
+[assembly: AssemblyProduct("手机号码加解密工具")]
 [assembly: AssemblyCopyright("Copyright © 上海讯飞瑞元信息技术有限公司 2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
