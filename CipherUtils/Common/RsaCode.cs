@@ -531,7 +531,7 @@ namespace IBS.Data
     {
         private static void GeneralKeyIV(string keyStr, out byte[] key, out byte[] iv)
         {
-            byte[] bytes = Encoding.UTF32.GetBytes(keyStr);
+            byte[] bytes = Encoding.UTF8.GetBytes(keyStr);
             key = SHA256Managed.Create().ComputeHash(bytes);
             iv = MD5.Create().ComputeHash(bytes);
         }
