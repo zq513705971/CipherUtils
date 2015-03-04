@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Algorithm\AESCode.cs" />
+    <Compile Include="Common\CodeTimer.cs" />
     <Compile Include="Csv\CachedCsvReader.cs" />
     <Compile Include="Csv\CsvReader.cs" />
     <Compile Include="Csv\CsvReader.Enum.cs" />
@@ -61,9 +62,7 @@
   <ItemGroup>
     <EmbeddedResource Include="Csv\Resources\ExceptionMessage.resx" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Common\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="RY.pfx" />
   </ItemGroup>
