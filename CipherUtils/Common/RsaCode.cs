@@ -406,7 +406,6 @@ namespace IBS.Data
                                         continue;
                                     cs.Write(src, 0, src.Length);
                                     cs.FlushFinalBlock();
-                                    byte[] bytes = (byte[])ms.ToArray();
                                     objs[index] = Encoding.UTF8.GetString(ms.ToArray());
                                 }
                             }
@@ -507,7 +506,6 @@ namespace IBS.Data
                                                 continue;
                                             cs.Write(_bytes, 0, _bytes.Length);
                                             cs.FlushFinalBlock();
-                                            byte[] bytes = (byte[])ms.ToArray();
                                             objs[index] = Encoding.UTF8.GetString(ms.ToArray());
                                         }
                                     }
@@ -697,7 +695,6 @@ namespace IBS.Data
                                         continue;
                                     cs.Write(src, 0, src.Length);
                                     cs.FlushFinalBlock();
-                                    byte[] bytes = (byte[])ms.ToArray();
                                     objs[index] = Encoding.UTF8.GetString(ms.ToArray());
                                 }
                             }
@@ -812,7 +809,6 @@ namespace IBS.Data
                                                 continue;
                                             cs.Write(_bytes, 0, _bytes.Length);
                                             cs.FlushFinalBlock();
-                                            byte[] bytes = (byte[])ms.ToArray();
                                             objs[index] = Encoding.UTF8.GetString(ms.ToArray());
                                         }
                                     }
