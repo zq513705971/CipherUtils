@@ -50,10 +50,17 @@ namespace CipherUtils
                     MessageBox.Show(string.Format("待{0}密文本为空！", this.encrypt ? "加" : "解"), "警告", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
+#if DES
                 if (encrypt)
                     textBoxDest.Text = DESCode.DESEncrypt(src, this.key.Key);
                 else
                     textBoxDest.Text = DESCode.DESDecrypt(src, this.key.Key);
+#else
+                if (encrypt)
+                    textBoxDest.Text = AESCode.AESEncrypt(src, this.key.Key);
+                else
+                    textBoxDest.Text = AESCode.AESDecrypt(src, this.key.Key);
+#endif
             }
             catch (Exception ex)
             {

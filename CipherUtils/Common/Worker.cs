@@ -54,8 +54,10 @@ namespace IBS.Data
         {
 #if RSA
             return RsaCode.RSAEncrypt(key, data, columns);
-#else
+#elif DES
             return DESCode.DESEncrypt(key, data, columns);
+#else
+            return AESCode.AESEncrypt(key, data, columns);
 #endif
         }
 
@@ -63,8 +65,10 @@ namespace IBS.Data
         {
 #if RSA
             return RsaCode.RSADecrypt(key, data, columns);
-#else
+#elif DES
             return DESCode.DESDecrypt(key, data, columns);
+#else
+            return AESCode.AESDecrypt(key, data, columns);
 #endif
         }
     }

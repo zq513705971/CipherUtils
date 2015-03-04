@@ -102,19 +102,31 @@ namespace CipherUtils
                         {
                             using (StreamWriter writer = new StreamWriter(Path.Combine(path, "PrivateKey.key")))
                             {
+#if DES
                                 writer.WriteLine(DESCode.DESEncrypt(key.PrivateKey, RsaCode.Prefix));
+#else
+                                writer.WriteLine(AESCode.AESEncrypt(key.PrivateKey, RsaCode.Prefix));
+#endif
                             }
                         }
                         using (StreamWriter writer = new StreamWriter(Path.Combine(path, "PublicKey.key")))
                         {
+#if DES
                             writer.WriteLine(DESCode.DESEncrypt(key.PublicKey, RsaCode.Prefix));
+#else
+                            writer.WriteLine(AESCode.AESEncrypt(key.PublicKey, RsaCode.Prefix));
+#endif
                         }
                         MessageBox.Show("导出密钥成功！", "提示");
 #else
                         KeyInfo deskey = KeyInfo.GetInstance();
                         using (StreamWriter writer = new StreamWriter(Path.Combine(path, "Key.key")))//使用“ibs.tech”加密DES密钥
                         {
+#if DES
                             writer.WriteLine(DESCode.DESEncrypt(deskey.Key, RsaCode.Prefix));
+#else
+                            writer.WriteLine(AESCode.AESEncrypt(deskey.Key, RsaCode.Prefix));
+#endif
                         }
                         MessageBox.Show("导出密钥成功！\nKey.key：提供给项目上使用", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         //TODO:Loader使用固定密码“ibs.tech”对“Key.key”内容解密得出DES加密、解密密钥；

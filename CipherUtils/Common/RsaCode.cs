@@ -529,6 +529,13 @@ namespace IBS.Data
 
     public class AESCode
     {
+        private static void GeneralKeyIV(string keyStr, out byte[] key, out byte[] iv)
+        {
+            byte[] bytes = Encoding.UTF32.GetBytes(keyStr);
+            key = SHA256Managed.Create().ComputeHash(bytes);
+            iv = MD5.Create().ComputeHash(bytes);
+        }
+
         /// <summary>   
         /// 加密方法 
         /// </summary> 
@@ -546,8 +553,11 @@ namespace IBS.Data
 #endif
             {
                 byte[] inputByteArray = Encoding.UTF8.GetBytes(encryptVal);
-                des.Key = ASCIIEncoding.ASCII.GetBytes(key);
-                des.IV = ASCIIEncoding.ASCII.GetBytes(key);
+                byte[] _key;
+                byte[] _iv;
+                GeneralKeyIV(key, out _key, out _iv);
+                des.Key = _key;
+                des.IV = _iv;
                 using (MemoryStream ms = new MemoryStream())
                 {
                     using (CryptoStream cs = new CryptoStream(ms, des.CreateEncryptor(), CryptoStreamMode.Write))
@@ -578,8 +588,11 @@ namespace IBS.Data
 #endif
             {
                 byte[] inputByteArray = Convert.FromBase64String(decryptVal);
-                des.Key = ASCIIEncoding.ASCII.GetBytes(key);
-                des.IV = ASCIIEncoding.ASCII.GetBytes(key);
+                byte[] _key;
+                byte[] _iv;
+                GeneralKeyIV(key, out _key, out _iv);
+                des.Key = _key;
+                des.IV = _iv;
                 using (MemoryStream ms = new MemoryStream())
                 {
                     using (CryptoStream cs = new CryptoStream(ms, des.CreateDecryptor(), CryptoStreamMode.Write))
@@ -610,8 +623,11 @@ namespace IBS.Data
             using (AesManaged des = new AesManaged())
 #endif
             {
-                des.Key = ASCIIEncoding.ASCII.GetBytes(key);
-                des.IV = ASCIIEncoding.ASCII.GetBytes(key);
+                byte[] _key;
+                byte[] _iv;
+                GeneralKeyIV(key, out _key, out _iv);
+                des.Key = _key;
+                des.IV = _iv;
                 ICryptoTransform transform = des.CreateEncryptor();
                 foreach (DataRow dr in dt.Rows)
                 {
@@ -659,8 +675,11 @@ namespace IBS.Data
             using (AesManaged des = new AesManaged())
 #endif
             {
-                des.Key = ASCIIEncoding.ASCII.GetBytes(key);
-                des.IV = ASCIIEncoding.ASCII.GetBytes(key);
+                byte[] _key;
+                byte[] _iv;
+                GeneralKeyIV(key, out _key, out _iv);
+                des.Key = _key;
+                des.IV = _iv;
                 ICryptoTransform transform = des.CreateDecryptor();
                 foreach (DataRow dr in dt.Rows)
                 {
@@ -698,8 +717,11 @@ namespace IBS.Data
             using (AesManaged des = new AesManaged())
 #endif
             {
-                des.Key = ASCIIEncoding.ASCII.GetBytes(key);
-                des.IV = ASCIIEncoding.ASCII.GetBytes(key);
+                byte[] _key;
+                byte[] _iv;
+                GeneralKeyIV(key, out _key, out _iv);
+                des.Key = _key;
+                des.IV = _iv;
                 ICryptoTransform transform = des.CreateEncryptor();
                 using (TextReader reader = new StreamReader(src, Encoding.Default))
                 {
@@ -756,8 +778,11 @@ namespace IBS.Data
             using (AesManaged des = new AesManaged())
 #endif
             {
-                des.Key = ASCIIEncoding.ASCII.GetBytes(key);
-                des.IV = ASCIIEncoding.ASCII.GetBytes(key);
+                byte[] _key;
+                byte[] _iv;
+                GeneralKeyIV(key, out _key, out _iv);
+                des.Key = _key;
+                des.IV = _iv;
                 ICryptoTransform transform = des.CreateDecryptor();
                 using (TextReader reader = new StreamReader(src, Encoding.Default))
                 {

@@ -19,8 +19,13 @@ namespace CipherUtils
 
         private RsaKeyInfo(DataRow dr)
         {
+#if DES
             this.PublicKey = DESCode.DESDecrypt(dr["publickey"].ToString(), RsaCode.Prefix);
             this.PrivateKey = DESCode.DESDecrypt(dr["privatekey"].ToString(), RsaCode.Prefix);
+#else
+            this.PublicKey = AESCode.AESDecrypt(dr["publickey"].ToString(), RsaCode.Prefix);
+            this.PrivateKey = AESCode.AESDecrypt(dr["privatekey"].ToString(), RsaCode.Prefix);
+#endif
             this.CreateDate = Convert.ToDateTime(dr["createdate"]);
         }
 
@@ -52,8 +57,13 @@ namespace CipherUtils
         public static void Init(RsaKeyInfo key)
         {
             SQLiteDataHelper.ExecuteNonQuery("create table sy_key(id integer primary key autoincrement,publickey varchar(2048),privatekey varchar(2048),createdate varchar(50),pcname varchar(50))");
+#if DES
             string _public = DESCode.DESEncrypt(key.PublicKey, RsaCode.Prefix);
             string _private = DESCode.DESEncrypt(key.PrivateKey, RsaCode.Prefix);
+#else
+            string _public = AESCode.AESEncrypt(key.PublicKey, RsaCode.Prefix);
+            string _private = AESCode.AESEncrypt(key.PrivateKey, RsaCode.Prefix);
+#endif
             SQLiteDataHelper.ExecuteNonQuery(string.Format("insert into sy_key(publickey,privatekey,createdate,pcname) values('{0}','{1}','{2:yyyy-MM-dd HH:mm:ss}','{3}')", _public, _private, key.CreateDate, Dns.GetHostName()));
         }
     }

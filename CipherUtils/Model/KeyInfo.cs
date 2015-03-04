@@ -12,7 +12,11 @@ namespace CipherUtils
     {
         public KeyInfo(DataRow dr)
         {
+#if DES
             this.Key = DESCode.DESDecrypt(dr["key"].ToString(), RsaCode.Prefix);
+#else
+            this.Key = AESCode.AESDecrypt(dr["key"].ToString(), RsaCode.Prefix);
+#endif
             this.CreateDate = Convert.ToDateTime(dr["createdate"]);
         }
 
@@ -46,7 +50,11 @@ namespace CipherUtils
         public static void Init(KeyInfo key)
         {
             SQLiteDataHelper.ExecuteNonQuery("create table sy_des_key(id integer primary key autoincrement,key varchar(2048),createdate varchar(50),pcname varchar(50))");
+#if DES
             string _key = DESCode.DESEncrypt(key.Key, RsaCode.Prefix);
+#else
+            string _key = AESCode.AESEncrypt(key.Key, RsaCode.Prefix);
+#endif
             SQLiteDataHelper.ExecuteNonQuery(string.Format("insert into sy_des_key(key,createdate,pcname) values('{0}','{1:yyyy-MM-dd HH:mm:ss}','{2}')", _key, key.CreateDate, Dns.GetHostName()));
         }
     }

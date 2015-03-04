@@ -469,14 +469,10 @@ namespace CipherUtils
                 this.Invoke((MethodInvoker)(() =>
                 {
                     lbStatus.Text = msg;
-                    Application.DoEvents();
                 }));
             }
             else
-            {
                 lbStatus.Text = msg;
-                Application.DoEvents();
-            }
             return this.executing;
         }
         #endregion
@@ -524,26 +520,38 @@ namespace CipherUtils
                         UpdateStatusText(string.Format("开始{0}数据...", encrypt ? "加密" : "解密"), true);
                         Utils.RunBackgroundWorker(backgroundWorkerMain, (sender1, ex1) =>
                         {
-                            try
+#if TIMER
+                            CodeTimer.Time("running", 1, () =>
                             {
-                                int rowCount = 0;
-#if RSA
-                                if (encrypt)
-                                    rowCount = RsaCode.RSAEncrypt(this.key.PublicKey, tEncryptPath.Text, dest, columns.ToArray(), UpdateStatus);
-                                else
-                                    rowCount = RsaCode.RSADecrypt(this.key.PrivateKey, tDecryptPath.Text, dest, columns.ToArray(), UpdateStatus);
-#else
-                                if (encrypt)
-                                    rowCount = DESCode.DESEncrypt(this.deskey.Key, tEncryptPath.Text, dest, columns.ToArray(), UpdateStatus);
-                                else
-                                    rowCount = DESCode.DESDecrypt(this.deskey.Key, tDecryptPath.Text, dest, columns.ToArray(), UpdateStatus);
 #endif
-                                ex1.Result = new Msg() { Result = true, Message = string.Format("共处理数据{0}行...", rowCount) };
-                            }
-                            catch (Exception ex)
-                            {
-                                ex1.Result = new Msg() { Result = false, Message = ex.Message };
-                            }
+                                try
+                                {
+                                    int rowCount = 0;
+#if RSA
+                                    if (encrypt)
+                                        rowCount = RsaCode.RSAEncrypt(this.key.PublicKey, tEncryptPath.Text, dest, columns.ToArray(), UpdateStatus);
+                                    else
+                                        rowCount = RsaCode.RSADecrypt(this.key.PrivateKey, tDecryptPath.Text, dest, columns.ToArray(), UpdateStatus);
+#elif DES
+                                    if (encrypt)
+                                        rowCount = DESCode.DESEncrypt(this.deskey.Key, tEncryptPath.Text, dest, columns.ToArray(), UpdateStatus);
+                                    else
+                                        rowCount = DESCode.DESDecrypt(this.deskey.Key, tDecryptPath.Text, dest, columns.ToArray(), UpdateStatus);
+#else
+                                    if (encrypt)
+                                        rowCount = AESCode.AESEncrypt(this.deskey.Key, tEncryptPath.Text, dest, columns.ToArray(), UpdateStatus);
+                                    else
+                                        rowCount = AESCode.AESDecrypt(this.deskey.Key, tDecryptPath.Text, dest, columns.ToArray(), UpdateStatus);
+#endif
+                                    ex1.Result = new Msg() { Result = true, Message = string.Format("共处理数据{0}行...", rowCount) };
+                                }
+                                catch (Exception ex)
+                                {
+                                    ex1.Result = new Msg() { Result = false, Message = ex.Message };
+                                }
+#if TIMER
+                            });
+#endif
                         }, (sender2, ex2) =>
                         {
                             Msg msg = ex2.Result as Msg;
