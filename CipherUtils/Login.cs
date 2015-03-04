@@ -50,7 +50,7 @@ namespace CipherUtils
                 return;
             }
             string msg = null;
-            this.User = UserInfo.Login(tUserName.Text, (tPassword.Text + RsaCode.Prefix).Substring(0, 8), out msg);
+            this.User = UserInfo.Login(tUserName.Text, tPassword.Text, out msg);
             if (this.User == null)
             {
                 MessageBox.Show(msg, "警告", MessageBoxButtons.OK, MessageBoxIcon.Warning);

@@ -49,7 +49,7 @@ namespace CipherUtils
             if (this.user != null)
             {
                 this.user.IsAdmin = checkBoxAdmin.Checked;
-                this.user.Password = (tPassword.Text + RsaCode.Prefix).Substring(0, 8);
+                this.user.Password = tPassword.Text;
                 this.user.Encrypt = checkBoxEncrypt.Checked;
                 this.user.EncryptDate = dateTimePickerEncrypt.Value;
                 this.user.Decrypt = checkBoxDecrypt.Checked;
@@ -74,7 +74,7 @@ namespace CipherUtils
                     MessageBox.Show("请输入用户名或密码...", "警告", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
-                this.user = new UserInfo() { UserName = tUserName.Text, Password = (tPassword.Text + RsaCode.Prefix).Substring(0, 8), IsAdmin = checkBoxAdmin.Checked, Encrypt = checkBoxEncrypt.Checked, EncryptDate = dateTimePickerEncrypt.Value, Decrypt = checkBoxDecrypt.Checked, DecryptDate = dateTimePickerDecrypt.Value };
+                this.user = new UserInfo() { UserName = tUserName.Text, Password = tPassword.Text, IsAdmin = checkBoxAdmin.Checked, Encrypt = checkBoxEncrypt.Checked, EncryptDate = dateTimePickerEncrypt.Value, Decrypt = checkBoxDecrypt.Checked, DecryptDate = dateTimePickerDecrypt.Value };
                 if (this.user.IsValid)
                 {
                     if (!UserInfo.HasUser(this.user.UserName))

@@ -43,7 +43,7 @@ namespace CipherUtils
                     string db = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "key.uky");
                     SQLiteDataHelper.CreateDataBase(db);
                     SQLiteDataHelper.SetSQLiteConnection(db);
-                    UserInfo.Init((tPassword.Text + RsaCode.Prefix).Substring(0, 8));
+                    UserInfo.Init(tPassword.Text);
 #if RSA
                     RsaKeyInfo rsakey = RsaKeyInfo.CreateKey();
                     RsaKeyInfo.Init(rsakey);
@@ -65,7 +65,7 @@ namespace CipherUtils
 
         private void tEncrypt_TextChanged(object sender, EventArgs e)
         {
-            btnOK.Enabled = tEncrypt.Text.Length == 8;
+            btnOK.Enabled = tEncrypt.Text.Length > 0;
         }
     }
 }

@@ -10,7 +10,6 @@ namespace IBS.Data
 {
     public class RsaCode
     {
-        public const string Prefix = "ibs.tech";
         /// <summary>
         /// 创建RSA公钥和私钥
         /// </summary>
@@ -62,7 +61,7 @@ namespace IBS.Data
                 byte[] keyBytes = Convert.FromBase64String(publickey);
                 rsa.ImportCspBlob(keyBytes);
 #endif
-                cipherbytes = rsa.Encrypt(Encoding.Unicode.GetBytes(Prefix + content), false);
+                cipherbytes = rsa.Encrypt(Encoding.UTF8.GetBytes(content), false);
                 return Convert.ToBase64String(cipherbytes);
             }
         }
@@ -94,7 +93,7 @@ namespace IBS.Data
                     {
                         if (objs[index] != null && objs[index] != DBNull.Value)
                         {
-                            byte[] bytes = rsa.Encrypt(Encoding.Unicode.GetBytes(Prefix + objs[index].ToString()), false);
+                            byte[] bytes = rsa.Encrypt(Encoding.UTF8.GetBytes(objs[index].ToString()), false);
                             objs[index] = Convert.ToBase64String(bytes);
                         }
                     }
@@ -124,8 +123,7 @@ namespace IBS.Data
                 rsa.ImportCspBlob(keyBytes);
 #endif
                 cipherbytes = rsa.Decrypt(Convert.FromBase64String(content), false);
-                string val = Encoding.Unicode.GetString(cipherbytes);
-                return val.Substring(Prefix.Length);
+                return Encoding.UTF8.GetString(cipherbytes);
             }
         }
 
@@ -157,8 +155,7 @@ namespace IBS.Data
                         if (objs[index] != null && objs[index] != DBNull.Value)
                         {
                             byte[] bytes = rsa.Decrypt(Convert.FromBase64String(objs[index].ToString()), false);
-                            string val = Encoding.Unicode.GetString(bytes);
-                            objs[index] = val.Substring(Prefix.Length);
+                            objs[index] = Encoding.UTF8.GetString(bytes);
                         }
                     }
                     result.Rows.Add(objs);
@@ -196,7 +193,7 @@ namespace IBS.Data
                             {
                                 if (_reader[index] != null && Array.Exists(columns, (column) => { return Convert.ToInt32(column) == index; }))
                                 {
-                                    byte[] bytes = rsa.Encrypt(Encoding.Unicode.GetBytes(Prefix + _reader[index].ToString()), false);
+                                    byte[] bytes = rsa.Encrypt(Encoding.UTF8.GetBytes(_reader[index].ToString()), false);
                                     objs[index] = Convert.ToBase64String(bytes);
                                 }
                                 else
@@ -248,8 +245,7 @@ namespace IBS.Data
                                 if (_reader[index] != null && Array.Exists(columns, (column) => { return Convert.ToInt32(column) == index; }))
                                 {
                                     byte[] bytes = rsa.Decrypt(Convert.FromBase64String(_reader[index].ToString()), false);
-                                    string val = Encoding.Unicode.GetString(bytes);
-                                    objs[index] = val.Substring(Prefix.Length);
+                                    objs[index] = Encoding.UTF8.GetString(bytes);
                                 }
                                 else
                                     objs[index] = _reader[index];
@@ -273,6 +269,18 @@ namespace IBS.Data
 
     public class DESCode
     {
+        private static void GeneralKeyIV(string keyStr, out byte[] key, out byte[] iv)
+        {
+            byte[] bytes = Encoding.UTF8.GetBytes(keyStr);
+            byte[] _key = SHA1.Create().ComputeHash(bytes);
+            key = new byte[8];
+            iv = new byte[8];
+            for (int i = 0; i < 8; i++)
+            {
+                iv[i] = _key[i];
+                key[i] = _key[i];
+            }
+        }
         /// <summary>   
         /// 加密方法 
         /// </summary> 
@@ -286,8 +294,11 @@ namespace IBS.Data
             using (DESCryptoServiceProvider des = new DESCryptoServiceProvider())
             {
                 byte[] inputByteArray = Encoding.UTF8.GetBytes(encryptVal);
-                des.Key = ASCIIEncoding.ASCII.GetBytes(key);
-                des.IV = ASCIIEncoding.ASCII.GetBytes(key);
+                byte[] _key;
+                byte[] _iv;
+                GeneralKeyIV(key, out _key, out _iv);
+                des.Key = _key;
+                des.IV = _iv;
                 using (MemoryStream ms = new MemoryStream())
                 {
                     using (CryptoStream cs = new CryptoStream(ms, des.CreateEncryptor(), CryptoStreamMode.Write))
@@ -314,8 +325,11 @@ namespace IBS.Data
             using (DESCryptoServiceProvider des = new DESCryptoServiceProvider())
             {
                 byte[] inputByteArray = Convert.FromBase64String(decryptVal);
-                des.Key = ASCIIEncoding.ASCII.GetBytes(key);
-                des.IV = ASCIIEncoding.ASCII.GetBytes(key);
+                byte[] _key;
+                byte[] _iv;
+                GeneralKeyIV(key, out _key, out _iv);
+                des.Key = _key;
+                des.IV = _iv;
                 using (MemoryStream ms = new MemoryStream())
                 {
                     using (CryptoStream cs = new CryptoStream(ms, des.CreateDecryptor(), CryptoStreamMode.Write))
@@ -342,8 +356,11 @@ namespace IBS.Data
             DataTable result = dt.Clone();
             using (DESCryptoServiceProvider des = new DESCryptoServiceProvider())
             {
-                des.Key = ASCIIEncoding.ASCII.GetBytes(key);
-                des.IV = ASCIIEncoding.ASCII.GetBytes(key);
+                byte[] _key;
+                byte[] _iv;
+                GeneralKeyIV(key, out _key, out _iv);
+                des.Key = _key;
+                des.IV = _iv;
                 ICryptoTransform transform = des.CreateEncryptor();
                 foreach (DataRow dr in dt.Rows)
                 {
@@ -387,8 +404,11 @@ namespace IBS.Data
             DataTable result = dt.Clone();
             using (DESCryptoServiceProvider des = new DESCryptoServiceProvider())
             {
-                des.Key = ASCIIEncoding.ASCII.GetBytes(key);
-                des.IV = ASCIIEncoding.ASCII.GetBytes(key);
+                byte[] _key;
+                byte[] _iv;
+                GeneralKeyIV(key, out _key, out _iv);
+                des.Key = _key;
+                des.IV = _iv;
                 ICryptoTransform transform = des.CreateDecryptor();
                 foreach (DataRow dr in dt.Rows)
                 {
@@ -421,8 +441,11 @@ namespace IBS.Data
         {
             using (DESCryptoServiceProvider des = new DESCryptoServiceProvider())
             {
-                des.Key = ASCIIEncoding.ASCII.GetBytes(key);
-                des.IV = ASCIIEncoding.ASCII.GetBytes(key);
+                byte[] _key;
+                byte[] _iv;
+                GeneralKeyIV(key, out _key, out _iv);
+                des.Key = _key;
+                des.IV = _iv;
                 ICryptoTransform transform = des.CreateEncryptor();
                 using (TextReader reader = new StreamReader(src, Encoding.Default))
                 {
@@ -475,8 +498,11 @@ namespace IBS.Data
         {
             using (DESCryptoServiceProvider des = new DESCryptoServiceProvider())
             {
-                des.Key = ASCIIEncoding.ASCII.GetBytes(key);
-                des.IV = ASCIIEncoding.ASCII.GetBytes(key);
+                byte[] _key;
+                byte[] _iv;
+                GeneralKeyIV(key, out _key, out _iv);
+                des.Key = _key;
+                des.IV = _iv;
                 ICryptoTransform transform = des.CreateDecryptor();
                 using (TextReader reader = new StreamReader(src, Encoding.Default))
                 {

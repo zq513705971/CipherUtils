@@ -8,6 +8,7 @@ namespace CipherUtils
 {
     public class UserInfo
     {
+        public const string Prefix = "ibs.tech";
         public UserInfo()
         { }
 
@@ -18,13 +19,13 @@ namespace CipherUtils
             this.Encrypt = Convert.ToInt32(dr["encrypt"]) == 1;
             this.Decrypt = Convert.ToInt32(dr["decrypt"]) == 1;
 #if DES
-            this.Password = DESCode.DESDecrypt(dr["password"].ToString(), RsaCode.Prefix);
-            string encryptdate = DESCode.DESDecrypt(dr["encryptdate"].ToString(), RsaCode.Prefix);
-            string decryptdate = DESCode.DESDecrypt(dr["decryptdate"].ToString(), RsaCode.Prefix);
+            this.Password = DESCode.DESDecrypt(dr["password"].ToString(), UserInfo.Prefix);
+            string encryptdate = DESCode.DESDecrypt(dr["encryptdate"].ToString(), UserInfo.Prefix);
+            string decryptdate = DESCode.DESDecrypt(dr["decryptdate"].ToString(), UserInfo.Prefix);
 #else
-            this.Password = AESCode.AESDecrypt(dr["password"].ToString(), RsaCode.Prefix);
-            string encryptdate = AESCode.AESDecrypt(dr["encryptdate"].ToString(), RsaCode.Prefix);
-            string decryptdate = AESCode.AESDecrypt(dr["decryptdate"].ToString(), RsaCode.Prefix);
+            this.Password = AESCode.AESDecrypt(dr["password"].ToString(), UserInfo.Prefix);
+            string encryptdate = AESCode.AESDecrypt(dr["encryptdate"].ToString(), UserInfo.Prefix);
+            string decryptdate = AESCode.AESDecrypt(dr["decryptdate"].ToString(), UserInfo.Prefix);
 #endif
             this.EncryptDate = Convert.ToDateTime(encryptdate);
             this.DecryptDate = Convert.ToDateTime(decryptdate);
@@ -52,7 +53,7 @@ namespace CipherUtils
         public static bool Init(string password)
         {
             SQLiteDataHelper.ExecuteNonQuery("create table sy_user(id integer primary key autoincrement,username varchar(100),password varchar(100),isadmin integer(5),encrypt integer(5),encryptdate varchar(50),decrypt integer(5),decryptdate varchar(50))");
-            UserInfo.Add(new UserInfo() { UserName = "ruiyuan", Password = RsaCode.Prefix, IsAdmin = true, Encrypt = true, EncryptDate = new DateTime(2099, 12, 31), Decrypt = true, DecryptDate = new DateTime(2099, 12, 31) });//最高管理员
+            UserInfo.Add(new UserInfo() { UserName = "ruiyuan", Password = UserInfo.Prefix, IsAdmin = true, Encrypt = true, EncryptDate = new DateTime(2099, 12, 31), Decrypt = true, DecryptDate = new DateTime(2099, 12, 31) });//最高管理员
             return UserInfo.Add(new UserInfo() { UserName = "administrator", Password = password, IsAdmin = true, Encrypt = true, EncryptDate = new DateTime(2099, 12, 31), Decrypt = true, DecryptDate = new DateTime(2099, 12, 31) });
         }
 
@@ -66,13 +67,13 @@ namespace CipherUtils
             try
             {
 #if DES
-                string enpsw = DESCode.DESEncrypt(user.Password, RsaCode.Prefix);
-                string encryptdate = DESCode.DESEncrypt(user.EncryptDate.ToString("yyyy-MM-dd HH:mm:ss"), RsaCode.Prefix);
-                string decryptdate = DESCode.DESEncrypt(user.DecryptDate.ToString("yyyy-MM-dd HH:mm:ss"), RsaCode.Prefix);
+                string enpsw = DESCode.DESEncrypt(user.Password, UserInfo.Prefix);
+                string encryptdate = DESCode.DESEncrypt(user.EncryptDate.ToString("yyyy-MM-dd HH:mm:ss"), UserInfo.Prefix);
+                string decryptdate = DESCode.DESEncrypt(user.DecryptDate.ToString("yyyy-MM-dd HH:mm:ss"), UserInfo.Prefix);
 #else
-                string enpsw = AESCode.AESEncrypt(user.Password, RsaCode.Prefix);
-                string encryptdate = AESCode.AESEncrypt(user.EncryptDate.ToString("yyyy-MM-dd HH:mm:ss"), RsaCode.Prefix);
-                string decryptdate = AESCode.AESEncrypt(user.DecryptDate.ToString("yyyy-MM-dd HH:mm:ss"), RsaCode.Prefix);
+                string enpsw = AESCode.AESEncrypt(user.Password, UserInfo.Prefix);
+                string encryptdate = AESCode.AESEncrypt(user.EncryptDate.ToString("yyyy-MM-dd HH:mm:ss"), UserInfo.Prefix);
+                string decryptdate = AESCode.AESEncrypt(user.DecryptDate.ToString("yyyy-MM-dd HH:mm:ss"), UserInfo.Prefix);
 #endif
                 SQLiteDataHelper.ExecuteNonQuery(string.Format("insert into sy_user(username,password,isadmin,encrypt,encryptdate,decrypt,decryptdate) values('{0}','{1}',{2},{3},'{4}',{5},'{6}')", user.UserName, enpsw, user.IsAdmin ? 1 : 0, user.Encrypt ? 1 : 0, encryptdate, user.Decrypt ? 1 : 0, decryptdate));
                 return true;
@@ -88,13 +89,13 @@ namespace CipherUtils
             try
             {
 #if DES
-                string enpsw = DESCode.DESEncrypt(user.Password, RsaCode.Prefix);
-                string encryptdate = DESCode.DESEncrypt(user.EncryptDate.ToString("yyyy-MM-dd HH:mm:ss"), RsaCode.Prefix);
-                string decryptdate = DESCode.DESEncrypt(user.DecryptDate.ToString("yyyy-MM-dd HH:mm:ss"), RsaCode.Prefix);
+                string enpsw = DESCode.DESEncrypt(user.Password, UserInfo.Prefix);
+                string encryptdate = DESCode.DESEncrypt(user.EncryptDate.ToString("yyyy-MM-dd HH:mm:ss"), UserInfo.Prefix);
+                string decryptdate = DESCode.DESEncrypt(user.DecryptDate.ToString("yyyy-MM-dd HH:mm:ss"), UserInfo.Prefix);
 #else
-                string enpsw = AESCode.AESEncrypt(user.Password, RsaCode.Prefix);
-                string encryptdate = AESCode.AESEncrypt(user.EncryptDate.ToString("yyyy-MM-dd HH:mm:ss"), RsaCode.Prefix);
-                string decryptdate = AESCode.AESEncrypt(user.DecryptDate.ToString("yyyy-MM-dd HH:mm:ss"), RsaCode.Prefix);
+                string enpsw = AESCode.AESEncrypt(user.Password, UserInfo.Prefix);
+                string encryptdate = AESCode.AESEncrypt(user.EncryptDate.ToString("yyyy-MM-dd HH:mm:ss"), UserInfo.Prefix);
+                string decryptdate = AESCode.AESEncrypt(user.DecryptDate.ToString("yyyy-MM-dd HH:mm:ss"), UserInfo.Prefix);
 #endif
                 SQLiteDataHelper.ExecuteNonQuery(string.Format("update sy_user set isadmin={0},encrypt={1},encryptdate='{2}',decrypt={3},decryptdate='{4}',password='{5}' where username='{6}'", user.IsAdmin ? 1 : 0, user.Encrypt ? 1 : 0, encryptdate, user.Decrypt ? 1 : 0, decryptdate, enpsw, user.UserName));
                 return true;
@@ -129,9 +130,9 @@ namespace CipherUtils
             try
             {
 #if DES
-                string enpsw = DESCode.DESEncrypt(password, RsaCode.Prefix);
+                string enpsw = DESCode.DESEncrypt(password, UserInfo.Prefix);
 #else
-                string enpsw = AESCode.AESEncrypt(password, RsaCode.Prefix);
+                string enpsw = AESCode.AESEncrypt(password, UserInfo.Prefix);
 #endif
                 DataTable users = SQLiteDataHelper.GetDataTableBySql(string.Format("select username,password,isadmin,encrypt,encryptdate,decrypt,decryptdate from sy_user where username='{0}' and password='{1}'", username, enpsw));
                 if (users.Rows.Count > 0)
@@ -184,13 +185,13 @@ namespace CipherUtils
                         _dr["ENCRYPT"] = Convert.ToInt32(dr["ENCRYPT"]) == 1;
                         _dr["DECRYPT"] = Convert.ToInt32(dr["DECRYPT"]) == 1;
 #if DES
-                        _dr["PASSWORD"] = DESCode.DESDecrypt(dr["PASSWORD"].ToString(), RsaCode.Prefix);
-                        _dr["ENCRYPTDATE"] = Convert.ToDateTime(DESCode.DESDecrypt(dr["ENCRYPTDATE"].ToString(), RsaCode.Prefix)).ToString("yyyy-MM-dd");                        
-                        _dr["DECRYPTDATE"] = Convert.ToDateTime(DESCode.DESDecrypt(dr["DECRYPTDATE"].ToString(), RsaCode.Prefix)).ToString("yyyy-MM-dd");
+                        _dr["PASSWORD"] = DESCode.DESDecrypt(dr["PASSWORD"].ToString(), UserInfo.Prefix);
+                        _dr["ENCRYPTDATE"] = Convert.ToDateTime(DESCode.DESDecrypt(dr["ENCRYPTDATE"].ToString(), UserInfo.Prefix)).ToString("yyyy-MM-dd");                        
+                        _dr["DECRYPTDATE"] = Convert.ToDateTime(DESCode.DESDecrypt(dr["DECRYPTDATE"].ToString(), UserInfo.Prefix)).ToString("yyyy-MM-dd");
 #else
-                        _dr["PASSWORD"] = AESCode.AESDecrypt(dr["PASSWORD"].ToString(), RsaCode.Prefix);
-                        _dr["ENCRYPTDATE"] = Convert.ToDateTime(AESCode.AESDecrypt(dr["ENCRYPTDATE"].ToString(), RsaCode.Prefix)).ToString("yyyy-MM-dd");
-                        _dr["DECRYPTDATE"] = Convert.ToDateTime(AESCode.AESDecrypt(dr["DECRYPTDATE"].ToString(), RsaCode.Prefix)).ToString("yyyy-MM-dd");
+                        _dr["PASSWORD"] = AESCode.AESDecrypt(dr["PASSWORD"].ToString(), UserInfo.Prefix);
+                        _dr["ENCRYPTDATE"] = Convert.ToDateTime(AESCode.AESDecrypt(dr["ENCRYPTDATE"].ToString(), UserInfo.Prefix)).ToString("yyyy-MM-dd");
+                        _dr["DECRYPTDATE"] = Convert.ToDateTime(AESCode.AESDecrypt(dr["DECRYPTDATE"].ToString(), UserInfo.Prefix)).ToString("yyyy-MM-dd");
 #endif
                         _users.Rows.Add(_dr);
                     }

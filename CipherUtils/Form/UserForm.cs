@@ -103,18 +103,18 @@ namespace CipherUtils
                             using (StreamWriter writer = new StreamWriter(Path.Combine(path, "PrivateKey.key")))
                             {
 #if DES
-                                writer.WriteLine(DESCode.DESEncrypt(key.PrivateKey, RsaCode.Prefix));
+                                writer.WriteLine(DESCode.DESEncrypt(key.PrivateKey, UserInfo.Prefix));
 #else
-                                writer.WriteLine(AESCode.AESEncrypt(key.PrivateKey, RsaCode.Prefix));
+                                writer.WriteLine(AESCode.AESEncrypt(key.PrivateKey, UserInfo.Prefix));
 #endif
                             }
                         }
                         using (StreamWriter writer = new StreamWriter(Path.Combine(path, "PublicKey.key")))
                         {
 #if DES
-                            writer.WriteLine(DESCode.DESEncrypt(key.PublicKey, RsaCode.Prefix));
+                            writer.WriteLine(DESCode.DESEncrypt(key.PublicKey, UserInfo.Prefix));
 #else
-                            writer.WriteLine(AESCode.AESEncrypt(key.PublicKey, RsaCode.Prefix));
+                            writer.WriteLine(AESCode.AESEncrypt(key.PublicKey, UserInfo.Prefix));
 #endif
                         }
                         MessageBox.Show("导出密钥成功！", "提示");
@@ -123,9 +123,9 @@ namespace CipherUtils
                         using (StreamWriter writer = new StreamWriter(Path.Combine(path, "Key.key")))//使用“ibs.tech”加密DES密钥
                         {
 #if DES
-                            writer.WriteLine(DESCode.DESEncrypt(deskey.Key, RsaCode.Prefix));
+                            writer.WriteLine(DESCode.DESEncrypt(deskey.Key, UserInfo.Prefix));
 #else
-                            writer.WriteLine(AESCode.AESEncrypt(deskey.Key, RsaCode.Prefix));
+                            writer.WriteLine(AESCode.AESEncrypt(deskey.Key, UserInfo.Prefix));
 #endif
                         }
                         MessageBox.Show("导出密钥成功！\nKey.key：提供给项目上使用", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
