@@ -37,7 +37,6 @@
             this.btnCancel = new System.Windows.Forms.Button();
             this.tEncrypt = new System.Windows.Forms.TextBox();
             this.lbEncrypt = new System.Windows.Forms.Label();
-            this.lbMsg = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // lbUserName
@@ -114,16 +113,6 @@
             this.lbEncrypt.TabIndex = 7;
             this.lbEncrypt.Text = "加解密密码：";
             // 
-            // lbMsg
-            // 
-            this.lbMsg.AutoSize = true;
-            this.lbMsg.ForeColor = System.Drawing.Color.Red;
-            this.lbMsg.Location = new System.Drawing.Point(213, 61);
-            this.lbMsg.Name = "lbMsg";
-            this.lbMsg.Size = new System.Drawing.Size(41, 12);
-            this.lbMsg.TabIndex = 9;
-            this.lbMsg.Text = "(*8位)";
-            // 
             // InitForm
             // 
             this.AcceptButton = this.btnOK;
@@ -131,7 +120,6 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
             this.ClientSize = new System.Drawing.Size(290, 132);
-            this.Controls.Add(this.lbMsg);
             this.Controls.Add(this.tEncrypt);
             this.Controls.Add(this.lbEncrypt);
             this.Controls.Add(this.btnCancel);
@@ -163,6 +151,5 @@
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.TextBox tEncrypt;
         private System.Windows.Forms.Label lbEncrypt;
-        private System.Windows.Forms.Label lbMsg;
     }
 }
