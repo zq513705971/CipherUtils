@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 
-namespace IBSTech.Cipher
+namespace IBSTech.Common
 {
     public static class CodeTimer
     {
