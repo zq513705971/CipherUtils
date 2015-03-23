@@ -4,16 +4,16 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{850D845E-D0E6-4A1C-A3CC-6E3591AA5C4B}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <ProjectGuid>{1A48EA5B-59A4-4B27-9722-22AE7F863857}</ProjectGuid>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>IBSTech.Cipher</RootNamespace>
-    <AssemblyName>IBSTech.Cipher</AssemblyName>
+    <RootNamespace>CipherConsole</RootNamespace>
+    <AssemblyName>CipherConsole</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>x86</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -23,18 +23,13 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup>
-    <SignAssembly>true</SignAssembly>
-  </PropertyGroup>
-  <PropertyGroup>
-    <AssemblyOriginatorKeyFile>RY.pfx</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -45,27 +40,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Algorithm\AESCode.cs" />
-    <Compile Include="Common\CodeTimer.cs" />
-    <Compile Include="Csv\CachedCsvReader.cs" />
-    <Compile Include="Csv\CsvReader.cs" />
-    <Compile Include="Csv\CsvReader.Enum.cs" />
-    <Compile Include="Csv\Events\ParseErrorEventArgs.cs" />
-    <Compile Include="Csv\Exceptions\MalformedCsvException.cs" />
-    <Compile Include="Csv\Exceptions\MissingFieldCsvException.cs" />
-    <Compile Include="Csv\Resources\ExceptionMessage.Designer.cs" />
-    <Compile Include="Algorithm\DESCode.cs" />
-    <Compile Include="Algorithm\ICipher.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Algorithm\RSACode.cs" />
-    <Compile Include="Worker.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Csv\Resources\ExceptionMessage.resx" />
-  </ItemGroup>
-  <ItemGroup />
-  <ItemGroup>
-    <None Include="RY.pfx" />
+    <ProjectReference Include="..\IBSTech.Cipher\IBSTech.Cipher.csproj">
+      <Project>{850d845e-d0e6-4a1c-a3cc-6e3591aa5c4b}</Project>
+      <Name>IBSTech.Cipher</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -8,7 +8,7 @@ namespace IBSTech.Cipher
 {
     interface ICipher
     {
-        string Key { get; set; }
+        //string Key { get; set; }
 
         string Encrypt(string val);
 
@@ -22,6 +22,10 @@ namespace IBSTech.Cipher
 
         int Decrypt(string src, string dest, int[] columns, Predicate<string> action);
 
-        void GeneralKeyIV(string keyStr, out byte[] key, out byte[] iv);
+        int Encrypt(string src, string dest, bool hasHeaders, int[] columns, Predicate<string> action);
+
+        int Decrypt(string src, string dest, bool hasHeaders, int[] columns, Predicate<string> action);
+
+        //void GeneralKeyIV(string keyStr, out byte[] key, out byte[] iv);
     }
 }

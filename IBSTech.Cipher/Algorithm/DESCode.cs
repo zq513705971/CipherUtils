@@ -145,6 +145,16 @@ namespace IBSTech.Cipher
 
         public int Encrypt(string src, string dest, int[] columns, Predicate<string> action)
         {
+            return Encrypt(src, dest, true, columns, action);
+        }
+
+        public int Decrypt(string src, string dest, int[] columns, Predicate<string> action)
+        {
+            return Decrypt(src, dest, true, columns, action);
+        }
+
+        public int Encrypt(string src, string dest, bool hasHeaders, int[] columns, Predicate<string> action)
+        {
             using (DESCryptoServiceProvider des = new DESCryptoServiceProvider())
             {
                 byte[] _key;
@@ -157,9 +167,10 @@ namespace IBSTech.Cipher
                 {
                     using (TextWriter writer = new StreamWriter(dest, false, Encoding.Default))
                     {
-                        CsvReader _reader = new CsvReader(reader, true);
+                        CsvReader _reader = new CsvReader(reader, hasHeaders);
+                        if (hasHeaders)
+                            writer.WriteLine(string.Join(",", _reader.GetFieldHeaders()));
                         int rowIndex = 0;
-                        writer.WriteLine(string.Join(",", _reader.GetFieldHeaders()));
                         while (_reader.ReadNextRecord())
                         {
                             if (rowIndex > 0 && rowIndex % 100 == 0 && action != null)
@@ -200,7 +211,7 @@ namespace IBSTech.Cipher
             }
         }
 
-        public int Decrypt(string src, string dest, int[] columns, Predicate<string> action)
+        public int Decrypt(string src, string dest, bool hasHeaders, int[] columns, Predicate<string> action)
         {
             using (DESCryptoServiceProvider des = new DESCryptoServiceProvider())
             {
@@ -214,9 +225,10 @@ namespace IBSTech.Cipher
                 {
                     using (TextWriter writer = new StreamWriter(dest, false, Encoding.Default))
                     {
-                        CsvReader _reader = new CsvReader(reader, true);
+                        CsvReader _reader = new CsvReader(reader, hasHeaders);
+                        if (hasHeaders)
+                            writer.WriteLine(string.Join(",", _reader.GetFieldHeaders()));
                         int rowIndex = 0;
-                        writer.WriteLine(string.Join(",", _reader.GetFieldHeaders()));
                         while (_reader.ReadNextRecord())
                         {
                             if (rowIndex > 0 && rowIndex % 100 == 0 && action != null)
