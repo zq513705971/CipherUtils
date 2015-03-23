@@ -7,7 +7,7 @@ using System.Text;
 
 namespace IBSTech.Cipher
 {
-    public class Worker : ICipher
+    public class Worker 
     {
         private static Worker worker;
         public string CipherKey;
