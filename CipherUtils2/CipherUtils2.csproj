@@ -77,13 +77,13 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="lock.ico" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\IBSTech.Cipher\IBSTech.Cipher.csproj">
       <Project>{850d845e-d0e6-4a1c-a3cc-6e3591aa5c4b}</Project>
       <Name>IBSTech.Cipher</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="lock.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
