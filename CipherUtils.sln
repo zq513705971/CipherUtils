@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CipherUtils2", "CipherUtils
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CipherConsole", "CipherConsole\CipherConsole.csproj", "{1A48EA5B-59A4-4B27-9722-22AE7F863857}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MY.Cipher", "MY.Cipher\MY.Cipher.csproj", "{375ED186-8363-45FF-91F0-6164D7FAF96C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{1A48EA5B-59A4-4B27-9722-22AE7F863857}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1A48EA5B-59A4-4B27-9722-22AE7F863857}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1A48EA5B-59A4-4B27-9722-22AE7F863857}.Release|Any CPU.Build.0 = Release|Any CPU
+		{375ED186-8363-45FF-91F0-6164D7FAF96C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{375ED186-8363-45FF-91F0-6164D7FAF96C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{375ED186-8363-45FF-91F0-6164D7FAF96C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{375ED186-8363-45FF-91F0-6164D7FAF96C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

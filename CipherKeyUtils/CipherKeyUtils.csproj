@@ -7,7 +7,7 @@
     <ProjectGuid>{80554BF0-7B5F-485B-A0A2-7668326FC6B4}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>CipherUtils2</RootNamespace>
+    <RootNamespace>CipherKeyUtils</RootNamespace>
     <AssemblyName>KeyTool</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
